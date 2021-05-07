@@ -45,7 +45,7 @@ class SubjectController extends Controller
         $subject->university_id = $universityID;
         $subject->save();
 
-        return response()->json(['success' => 'Предмет успешно создан', 'typeID' => $subject->id]);
+        return response()->json(['success' => 'Предмет успешно создан', 'subjectID' => $subject->id]);
     }
 
     public function edit($universityID, $subjectID)
