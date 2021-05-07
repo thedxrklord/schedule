@@ -36,11 +36,10 @@ class DepartmentController extends Controller
             return response()->json(['error' => 'Укажите `fullName`']);
 
         // Check if it doesnt exists
-        $existsShort = Department::where('short_name', '=', $shortName)->where('faculty_id', '=', $facultyID)->first();
-        $existsFull = Department::where('full_name', '=', $fullName)->where('faculty_id', '=', $facultyID)->first();
+        $exists = Department::where('short_name', '=', $shortName)->where('full_name', '=', $fullName)->where('faculty_id', '=', $facultyID)->first();
 
-        if ($existsFull || $existsShort)
-            return response()->json(['error' => 'Кафедра с указанным именем или коротким именем уже существует на данном факультете']);
+        if ($exists)
+            return response()->json(['error' => 'Кафедра с указанным именем и коротким именем уже существует на данном факультете']);
 
         // Create faculty
         $department = new Department();

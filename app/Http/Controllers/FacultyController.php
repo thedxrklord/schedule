@@ -34,11 +34,9 @@ class FacultyController extends Controller
             return response()->json(['error' => 'Укажите `fullName`']);
 
         // Check if it doesnt exists
-        $existsShort = Faculty::where('short_name', '=', $shortName)->where('university_id', '=', $universityID)->first();
-        $existsFull = Faculty::where('full_name', '=', $fullName)->where('university_id', '=', $universityID)->first();
-
-        if ($existsFull || $existsShort)
-            return response()->json(['error' => 'Факультет с указанным именем или коротким именем уже существует']);
+        $exists = Faculty::where('short_name', '=', $shortName)->where('full_name', '=', $fullName)->where('university_id', '=', $universityID)->first();
+        if ($exists)
+            return response()->json(['error' => 'Факультет с указанным именем и коротким именем уже существует']);
 
         // Create faculty
         $faculty = new Faculty();
