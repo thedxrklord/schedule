@@ -20,16 +20,38 @@ class LessonController extends Controller
         return $dateObj && $dateObj->format($format) == $date;
     }
 
-    public function create(Request $request)
+    public function massCreate()
     {
-        $input = [];
-        $input['subjectID'] = $request->subjectID;
-        $input['classroomID'] = $request->classroomID;
-        $input['classtimeID'] = $request->classtimeID;
-        $input['groupID'] = $request->groupID;
-        $input['teacherID'] = $request->teacherID;
-        $input['typeID'] = $request->typeID;
-        $input['date'] = $request->date;
+        $lessons = json_decode(json_encode(request()->lessons));
+
+        foreach ($lessons as $lesson) {
+            $input = [];
+            $input['subjectID'] = $lesson->subjectID;
+            $input['classroomID'] = $lesson->classroomID;
+            $input['classtimeID'] = $lesson->classtimeID;
+            $input['groupID'] = $lesson->groupID;
+            $input['teacherID'] = $lesson->teacherID;
+            $input['typeID'] = $lesson->typeID;
+            $input['date'] = $lesson->date;
+
+            $this->create(request(), $input);
+        }
+
+        return response()->json(['success' => 'Пары успешно созданы']);
+    }
+
+    public function create(Request $request, $input=null)
+    {
+        if ($input == null) {
+            $input = [];
+            $input['subjectID'] = $request->subjectID;
+            $input['classroomID'] = $request->classroomID;
+            $input['classtimeID'] = $request->classtimeID;
+            $input['groupID'] = $request->groupID;
+            $input['teacherID'] = $request->teacherID;
+            $input['typeID'] = $request->typeID;
+            $input['date'] = $request->date;
+        }
 
         foreach ($input as $key => $value) {
             if (!isset($value))

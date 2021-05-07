@@ -54,6 +54,7 @@ Route::middleware('auth.basic')->prefix('auth')->group(function() {
     Route::get('university/{universityID}/groups', [\App\Http\Controllers\UniversityControllerWithMiddleware::class, 'universityGroups']);
     Route::get('department/{departmentID}/groups', [\App\Http\Controllers\GroupController::class, 'groups']);
     // -- Lessons
+    Route::post('lesson/mass-create', [\App\Http\Controllers\LessonController::class, 'massCreate']);
     Route::post('lesson/create', [\App\Http\Controllers\LessonController::class, 'create']);
     Route::get('lesson/{id}/remove', [\App\Http\Controllers\LessonController::class, 'remove']);
     Route::post('lesson/mass-remove', [\App\Http\Controllers\LessonController::class, 'massRemove']);

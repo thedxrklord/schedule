@@ -32,11 +32,10 @@ class SubjectController extends Controller
             return response()->json(['error' => 'Укажите `fullName`']);
 
         // Check if it doesnt exists
-        $existsShort = Subject::where('short_name', '=', $shortName)->where('university_id', '=', $universityID)->first();
-        $existsFull = Subject::where('full_name', '=', $fullName)->where('university_id', '=', $universityID)->first();
+        $exists = Subject::where('short_name', '=', $shortName)->where('full_name', '=', $fullName)->where('university_id', '=', $universityID)->first();
 
-        if ($existsFull || $existsShort)
-            return response()->json(['error' => 'Предмет с указанным именем или коротким именем уже существует']);
+        if ($exists)
+            return response()->json(['error' => 'Предмет с указанным именем и коротким именем уже существует']);
 
         // Create faculty
         $subject = new Subject();
