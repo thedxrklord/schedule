@@ -95,7 +95,6 @@
 
     <div class="content">
         <div class="title m-b-md">E-Schedule</div>
-        <div class="card-subtitle m-b-md">with ❤ by <a href="https://dxrk.dev" class="text" target="_blank">dxrk</a></div>
     </div>
 </div>
 </body>
