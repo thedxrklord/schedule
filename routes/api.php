@@ -57,6 +57,8 @@ Route::middleware('auth.basic')->prefix('auth')->group(function() {
     Route::post('lesson/create', [\App\Http\Controllers\LessonController::class, 'create']);
     Route::get('lesson/{id}/remove', [\App\Http\Controllers\LessonController::class, 'remove']);
     Route::get('group/{groupID}/lessons', [\App\Http\Controllers\LessonController::class, 'groupLessons']);
+    Route::get('group/{groupID}/lessons-normal-short-names', [\App\Http\Controllers\LessonController::class, 'groupLessonsNormalShort']);
+    Route::get('group/{groupID}/lessons-normal-full-names', [\App\Http\Controllers\LessonController::class, 'groupLessonsNormalFull']);
 });
 
 // - These are public routes that users can use without auth (such as students)
