@@ -167,6 +167,16 @@ class LessonController extends Controller
         return $normalLessons;
     }
 
+    public function massRemove()
+    {
+        $lessons = request()->lessons;
+        foreach ($lessons as $lesson) {
+            $this->remove($lesson);
+        }
+
+        return response()->json(['success' => 'Пары успешно удалены']);
+    }
+
     public function remove($lessonID)
     {
         $lesson = Lesson::byID($lessonID);

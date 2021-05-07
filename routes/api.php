@@ -56,6 +56,7 @@ Route::middleware('auth.basic')->prefix('auth')->group(function() {
     // -- Lessons
     Route::post('lesson/create', [\App\Http\Controllers\LessonController::class, 'create']);
     Route::get('lesson/{id}/remove', [\App\Http\Controllers\LessonController::class, 'remove']);
+    Route::post('lesson/mass-remove', [\App\Http\Controllers\LessonController::class, 'massRemove']);
     Route::get('group/{groupID}/lessons', [\App\Http\Controllers\LessonController::class, 'groupLessons']);
     Route::get('group/{groupID}/lessons-normal-short-names', [\App\Http\Controllers\LessonController::class, 'groupLessonsNormalShort']);
     Route::get('group/{groupID}/lessons-normal-full-names', [\App\Http\Controllers\LessonController::class, 'groupLessonsNormalFull']);
