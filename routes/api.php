@@ -35,7 +35,7 @@ Route::middleware('auth.basic')->prefix('auth')->group(function() {
     Route::post('university/{universityID}/subject/create', [\App\Http\Controllers\SubjectController::class, 'create']);
     Route::post('university/{universityID}/subject/{subjectID}/edit', [\App\Http\Controllers\SubjectController::class, 'edit']);
     Route::get('university/{universityID}/subject/{subjectID}/remove', [\App\Http\Controllers\SubjectController::class, 'remove']);
-    Route::get('university/{universityID}/subjects', [\App\Http\Controllers\ClassroomController::class, 'subjects']);
+    Route::get('university/{universityID}/subjects', [\App\Http\Controllers\SubjectController::class, 'subjects']);
     // -- Teachers
     Route::post('department/{departmentID}/teacher/create', [\App\Http\Controllers\TeacherController::class, 'create']);
     Route::post('department/{departmentID}/teacher/{teacherID}/edit', [\App\Http\Controllers\TeacherController::class, 'edit']);
