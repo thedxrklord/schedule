@@ -9,7 +9,7 @@ use Illuminate\Http\Request;
 
 class DepartmentController extends Controller
 {
-    private $university;
+    public $university;
     private $faculty;
 
     public function __construct()
@@ -89,7 +89,10 @@ class DepartmentController extends Controller
         $teachers = $department->teachers();
         $groups = $department->groups();
         $teacherController = new TeacherController();
+        $teacherController->university = $this->university;
         $groupController = new GroupController();
+        $groupController->university = $this->university;
+
 
         foreach ($teachers as $teacher)
             $teacherController->remove($departmentID, $teacher->id);

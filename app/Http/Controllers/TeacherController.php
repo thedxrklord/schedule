@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 
 class TeacherController extends Controller
 {
-    private $university;
+    public $university;
     private $department;
 
     public function __construct()

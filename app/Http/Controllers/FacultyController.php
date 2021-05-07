@@ -77,7 +77,9 @@ class FacultyController extends Controller
         if (!$faculty)
             return response()->json(['error' => 'Указанного факультета не существует']);
         $departments = $faculty->departments();
+
         $departmentController = new DepartmentController();
+        $departmentController->university = $this->university;
 
         foreach ($departments as $department)
             $departmentController->remove($facultyID, $department->id);
