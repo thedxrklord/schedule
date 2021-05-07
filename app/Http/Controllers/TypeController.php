@@ -32,11 +32,9 @@ class TypeController extends Controller
             return response()->json(['error' => 'Укажите `fullName`']);
 
         // Check if it doesnt exists
-        $existsShort = Type::where('short_name', '=', $shortName)->where('university_id', '=', $universityID)->first();
-        $existsFull = Type::where('full_name', '=', $fullName)->where('university_id', '=', $universityID)->first();
-
-        if ($existsFull || $existsShort)
-            return response()->json(['error' => 'Тип с указанным именем или коротким именем уже существует']);
+        $exists = Type::where('short_name', '=', $shortName)->where('full_name', '=', $fullName)->where('university_id', '=', $universityID)->first();
+        if ($exists)
+            return response()->json(['error' => 'Тип с указанным именем и коротким именем уже существует']);
 
         // Create faculty
         $type = new Type();
