@@ -1,7 +1,9 @@
-University Schedule Management
-
+<h1 style="text-align: center">University Schedule Management</h1>
+<p style="text-align: center">
 This project is a mini-implementation of university management system.
 <br>The goal of the project is to easily manage the university schedule.
+</p>
+<br><br>
 
 Server requirements:
 ````
