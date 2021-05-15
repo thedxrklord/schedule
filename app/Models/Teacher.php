@@ -30,8 +30,8 @@ class Teacher extends Model
         return $this->department()->faculty()->university();
     }
 
-    public function lessons()
+    public function lessons($dateFrom, $dateTo)
     {
-        return Lesson::where('teacher_id', '=', $this->id)->get();
+        return Lesson::where('teacher_id', '=', $this->id)->where('date', '>=', $dateFrom)->where('date', '<=', $dateTo)->get();
     }
 }

@@ -25,8 +25,8 @@ class Classroom extends Model
         return University::byID($this->university_id);
     }
 
-    public function lessons()
+    public function lessons($dateFrom, $dateTo)
     {
-        return Lesson::where('classroom_id', '=', $this->id)->get();
+        return Lesson::where('classroom_id', '=', $this->id)->where('date', '>=', $dateFrom)->where('date', '<=', $dateTo)->get();
     }
 }

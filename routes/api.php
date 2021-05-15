@@ -70,6 +70,8 @@ Route::middleware('auth.basic')->prefix('auth')->group(function() {
     Route::get('classroom/{classroomID}/lessons', [\App\Http\Controllers\LessonController::class, 'classroomLessons']);
     Route::get('classroom/{classroomID}/lessons-normal-short-names', [\App\Http\Controllers\LessonController::class, 'classroomLessonsNormalShort']);
     Route::get('classroom/{classroomID}/lessons-normal-full-names', [\App\Http\Controllers\LessonController::class, 'classroomLessonsNormalFull']);
+
+    Route::get('empty-classrooms/{classtimeID}', [\App\Http\Controllers\LessonController::class, 'emptyClassrooms']);
 });
 
 // - These are public routes that users can use without auth (such as students)
@@ -107,3 +109,5 @@ Route::get('teacher/{teacherID}/lessons-normal-full-names', [\App\Http\Controlle
 Route::get('classroom/{classroomID}/lessons', [\App\Http\Controllers\LessonController::class, 'classroomLessons']);
 Route::get('classroom/{classroomID}/lessons-normal-short-names', [\App\Http\Controllers\LessonController::class, 'classroomLessonsNormalShort']);
 Route::get('classroom/{classroomID}/lessons-normal-full-names', [\App\Http\Controllers\LessonController::class, 'classroomLessonsNormalFull']);
+
+Route::get('empty-classrooms/{classtimeID}', [\App\Http\Controllers\LessonController::class, 'emptyClassrooms']);

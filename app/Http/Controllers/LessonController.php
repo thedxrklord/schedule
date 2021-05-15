@@ -177,7 +177,47 @@ class LessonController extends Controller
         $dateTo = date('Y-m-d', strtotime($dateTo));
         // Date limit end
 
-        return $teacher->lessons();
+        return $teacher->lessons($dateFrom, $dateTo);
+    }
+
+    public function emptyClassrooms($classtimeID)
+    {
+        $classtime = Classtime::byID($classtimeID);
+
+        if (!$classtime)
+            return response()->json(['error' => 'Времени с указанным id не существует']);
+        if (!$classtime->university()->belongsToCurrentUser()) {
+            if (!$classtime->university()->public)
+                return response()->json(['error' => "У вас нет доступа к данному университету"]);
+        }
+
+        // Date limit
+        $date = request()->date ?? date('d.m.Y', 0);
+
+        if (!$this->isValidDate($date))
+            return response()->json(['error' => "Формат даты: d.m.Y"]);
+        $date = date('Y-m-d', strtotime($date));
+
+        $lessons = Lesson::where('date', '=', $date)->where('classtime_id', '=', $classtimeID)->get();
+
+        $classroomLessons = [];
+        $classrooms = Classroom::all();
+
+        foreach ($classrooms as $classroom) {
+            $classroomLessons[$classroom->id] = 0;
+        }
+
+        foreach ($lessons as $lesson) {
+            $classroomLessons[$lesson->classroom_id]++;
+        }
+
+        $classroomsNeeded = [];
+        foreach ($classroomLessons as $classroom => $classroomLesson) {
+            if ($classroomLesson == 0)
+                $classroomsNeeded[] = $classroom;
+        }
+
+        return Classroom::whereIn('id', $classroomsNeeded)->get();
     }
 
     public function classroomLessons($classroomID)
@@ -200,7 +240,7 @@ class LessonController extends Controller
         $dateTo = date('Y-m-d', strtotime($dateTo));
         // Date limit end
 
-        return $classroom->lessons();
+        return $classroom->lessons($dateFrom, $dateTo);
     }
 
     public function classroomLessonsNormalFull($classroomID)
