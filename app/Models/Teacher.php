@@ -29,4 +29,9 @@ class Teacher extends Model
     {
         return $this->department()->faculty()->university();
     }
+
+    public function lessons()
+    {
+        return Lesson::where('teacher_id', '=', $this->id)->get();
+    }
 }

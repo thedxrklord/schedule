@@ -24,4 +24,9 @@ class Classroom extends Model
     {
         return University::byID($this->university_id);
     }
+
+    public function lessons()
+    {
+        return Lesson::where('classroom_id', '=', $this->id)->get();
+    }
 }

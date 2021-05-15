@@ -58,9 +58,18 @@ Route::middleware('auth.basic')->prefix('auth')->group(function() {
     Route::post('lesson/create', [\App\Http\Controllers\LessonController::class, 'create']);
     Route::get('lesson/{id}/remove', [\App\Http\Controllers\LessonController::class, 'remove']);
     Route::post('lesson/mass-remove', [\App\Http\Controllers\LessonController::class, 'massRemove']);
+
     Route::get('group/{groupID}/lessons', [\App\Http\Controllers\LessonController::class, 'groupLessons']);
     Route::get('group/{groupID}/lessons-normal-short-names', [\App\Http\Controllers\LessonController::class, 'groupLessonsNormalShort']);
     Route::get('group/{groupID}/lessons-normal-full-names', [\App\Http\Controllers\LessonController::class, 'groupLessonsNormalFull']);
+
+    Route::get('teacher/{teacherID}/lessons', [\App\Http\Controllers\LessonController::class, 'teacherLessons']);
+    Route::get('teacher/{teacherID}/lessons-normal-short-names', [\App\Http\Controllers\LessonController::class, 'teacherLessonsNormalShort']);
+    Route::get('teacher/{teacherID}/lessons-normal-full-names', [\App\Http\Controllers\LessonController::class, 'teacherLessonsNormalFull']);
+
+    Route::get('classroom/{classroomID}/lessons', [\App\Http\Controllers\LessonController::class, 'classroomLessons']);
+    Route::get('classroom/{classroomID}/lessons-normal-short-names', [\App\Http\Controllers\LessonController::class, 'classroomLessonsNormalShort']);
+    Route::get('classroom/{classroomID}/lessons-normal-full-names', [\App\Http\Controllers\LessonController::class, 'classroomLessonsNormalFull']);
 });
 
 // - These are public routes that users can use without auth (such as students)
@@ -90,3 +99,11 @@ Route::get('department/{departmentID}/groups', [\App\Http\Controllers\GroupContr
 Route::get('group/{groupID}/lessons', [\App\Http\Controllers\LessonController::class, 'groupLessons']);
 Route::get('group/{groupID}/lessons-normal-short-names', [\App\Http\Controllers\LessonController::class, 'groupLessonsNormalShort']);
 Route::get('group/{groupID}/lessons-normal-full-names', [\App\Http\Controllers\LessonController::class, 'groupLessonsNormalFull']);
+
+Route::get('teacher/{teacherID}/lessons', [\App\Http\Controllers\LessonController::class, 'teacherLessons']);
+Route::get('teacher/{teacherID}/lessons-normal-short-names', [\App\Http\Controllers\LessonController::class, 'teacherLessonsNormalShort']);
+Route::get('teacher/{teacherID}/lessons-normal-full-names', [\App\Http\Controllers\LessonController::class, 'teacherLessonsNormalFull']);
+
+Route::get('classroom/{classroomID}/lessons', [\App\Http\Controllers\LessonController::class, 'classroomLessons']);
+Route::get('classroom/{classroomID}/lessons-normal-short-names', [\App\Http\Controllers\LessonController::class, 'classroomLessonsNormalShort']);
+Route::get('classroom/{classroomID}/lessons-normal-full-names', [\App\Http\Controllers\LessonController::class, 'classroomLessonsNormalFull']);

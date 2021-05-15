@@ -144,12 +144,87 @@ class LessonController extends Controller
                 return response()->json(['error' => "У вас нет доступа к данному университету"]);
         }
 
-        return $group->lessons();
+        // Date limit
+        $dateFrom = request()->dateFrom ?? date('d.m.Y', 0);
+        $dateTo = request()->dateTo ?? date('d.m.Y', PHP_INT_MAX);
+
+        if (!$this->isValidDate($dateFrom) || !$this->isValidDate($dateTo))
+            return response()->json(['error' => "Формат даты: d.m.Y"]);
+        $dateFrom = date('Y-m-d', strtotime($dateFrom));
+        $dateTo = date('Y-m-d', strtotime($dateTo));
+        // Date limit end
+
+        return $group->lessons($dateFrom, $dateTo);
     }
 
-    public function groupLessonsNormalShort($groupID)
+    public function teacherLessons($teacherID)
     {
-        $lessons = $this->groupLessons($groupID);
+        $teacher = Teacher::byID($teacherID);
+        if (!$teacher)
+            return response()->json(['error' => "Несуществующий преподаватель"]);
+        if (!$teacher->university()->belongsToCurrentUser()) {
+            if (!$teacher->university()->public)
+                return response()->json(['error' => "У вас нет доступа к данному университету"]);
+        }
+
+        // Date limit
+        $dateFrom = request()->dateFrom ?? date('d.m.Y', 0);
+        $dateTo = request()->dateTo ?? date('d.m.Y', PHP_INT_MAX);
+
+        if (!$this->isValidDate($dateFrom) || !$this->isValidDate($dateTo))
+            return response()->json(['error' => "Формат даты: d.m.Y"]);
+        $dateFrom = date('Y-m-d', strtotime($dateFrom));
+        $dateTo = date('Y-m-d', strtotime($dateTo));
+        // Date limit end
+
+        return $teacher->lessons();
+    }
+
+    public function classroomLessons($classroomID)
+    {
+        $classroom = Classroom::byID($classroomID);
+        if (!$classroom)
+            return response()->json(['error' => "Несуществующая аудитория"]);
+        if (!$classroom->university()->belongsToCurrentUser()) {
+            if (!$classroom->university()->public)
+                return response()->json(['error' => "У вас нет доступа к данному университету"]);
+        }
+
+        // Date limit
+        $dateFrom = request()->dateFrom ?? date('d.m.Y', 0);
+        $dateTo = request()->dateTo ?? date('d.m.Y', PHP_INT_MAX);
+
+        if (!$this->isValidDate($dateFrom) || !$this->isValidDate($dateTo))
+            return response()->json(['error' => "Формат даты: d.m.Y"]);
+        $dateFrom = date('Y-m-d', strtotime($dateFrom));
+        $dateTo = date('Y-m-d', strtotime($dateTo));
+        // Date limit end
+
+        return $classroom->lessons();
+    }
+
+    public function classroomLessonsNormalFull($classroomID)
+    {
+        return $this->normalizeLessonsFull($this->classroomLessons($classroomID));
+    }
+
+    public function classroomLessonsNormalShort($classroomID)
+    {
+        return $this->normalizeLessonsShort($this->classroomLessons($classroomID));
+    }
+
+    public function teacherLessonsNormalShort($teacherID)
+    {
+        return $this->normalizeLessonsShort($this->teacherLessons($teacherID));
+    }
+
+    public function teacherLessonsNormalFull($teacherID)
+    {
+        return $this->normalizeLessonsFull($this->teacherLessons($teacherID));
+    }
+
+    private function normalizeLessonsShort($lessons)
+    {
         $normalLessons = [];
         foreach ($lessons as $lesson) {
             $tempLesson = [];
@@ -168,9 +243,8 @@ class LessonController extends Controller
         return $normalLessons;
     }
 
-    public function groupLessonsNormalFull($groupID)
+    private function normalizeLessonsFull($lessons)
     {
-        $lessons = $this->groupLessons($groupID);
         $normalLessons = [];
         foreach ($lessons as $lesson) {
             $tempLesson = [];
@@ -187,6 +261,16 @@ class LessonController extends Controller
         }
 
         return $normalLessons;
+    }
+
+    public function groupLessonsNormalShort($groupID)
+    {
+        return $this->normalizeLessonsShort($this->groupLessons($groupID));
+    }
+
+    public function groupLessonsNormalFull($groupID)
+    {
+        return $this->normalizeLessonsFull($this->groupLessons($groupID));
     }
 
     public function massRemove()
