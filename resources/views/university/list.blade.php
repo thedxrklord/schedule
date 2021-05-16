@@ -3,20 +3,29 @@
 @section('content')
     <div class="container">
         <div class="row">
-            @foreach($universities as $university)
-                <div class="card" style="width: 23rem; margin: 5px;">
-                    <img src="{{ $university->image }}" class="card-img-top">
-                    <div class="card-body">
-                        <h5 class="card-title">{{ $university->short_name }} {{ (!$university->belongsToCurrentUser() && $university->currentUserHasAccess()) ? '(Общий доступ)' : '' }}</h5>
-                        <p class="card-text">{{ $university->description }}</p>
-                        @if($university->belongsToCurrentUser())
-                            <a href="{{ route('shared', $university->id) }}" class="btn btn-outline-dark">Общий доступ</a>
-                            <a href="#" class="btn btn-outline-info">Редактировать</a>
-                            <a href="#" class="btn btn-outline-danger">X</a>
-                        @endif
+            <div class="col-12 col-sm-6 col-lg-4 col-xl-3">
+                @foreach($universities as $university)
+                    <div class="card">
+                        <img src="{{ $university->image }}" class="card-img-top" alt="img">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ $university->short_name }}</h5>
+                            <p class="card-text">{{ $university->full_name }}</p>
+                        </div>
+                        <div class="list-group list-group-flush">
+                            @if(!$university->belongsToCurrentUser() && $university->currentUserHasAccess())
+                                <div class="list-group-item">Shared access</div>
+                            @endif
+                            @if($university->belongsToCurrentUser())
+                                <a href="{{ route('shared', $university->id) }}"
+                                   class="list-group-item list-group-item-action">User access</a>
+                                <a href="{{ route('university.edit', $university->id) }}"
+                                   class="list-group-item list-group-item-action">Edit</a>
+                                <a href="#" class="list-group-item list-group-item-action">Delete</a>
+                            @endif
+                        </div>
                     </div>
-                </div>
-            @endforeach
+                @endforeach
+            </div>
         </div>
     </div>
 @endsection

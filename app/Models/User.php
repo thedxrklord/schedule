@@ -55,6 +55,11 @@ class User extends Authenticatable
         return $universities;
     }
 
+    public function isAdmin()
+    {
+        return $this->email == env('ADMINISTRATOR_EMAIL');
+    }
+
     public function createdUniversities()
     {
         return University::where('creator_id', '=', $this->id)->get();

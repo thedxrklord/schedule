@@ -34,6 +34,27 @@ class UniversityController extends Controller
         }
     }
 
+    public function editUniversity($universityID, Request $request)
+    {
+        $university = University::byID($universityID);
+
+        if (!$university)
+            return redirect()->back()->with(['error' => 'Не найден университет с указанным id']);
+        if (!$university->belongsToCurrentUser())
+            return redirect()->back()->with(['error' => 'Вы не имееете доступа к данному университету']);
+        if ($request->isMethod('GET'))
+            return view('university.edit', compact('university'));
+        else {
+            $university->short_name = $request->university_short_name;
+            $university->full_name = $request->university_full_name;
+            $university->description = $request->university_description;
+            $university->public = isset($request->university_public) && $request->university_public == 'on';
+            $university->save();
+
+            return redirect()->back()->with(['success' => 'Университет успешно сохранён']);
+        }
+    }
+
     public function university($universityID)
     {
         $university = University::byID($universityID);
@@ -42,7 +63,7 @@ class UniversityController extends Controller
             return response()->json(['error' => 'Университета с указанным ID не существует']);
         if ($university->public)
             return $university;
-  
+
         if (!auth()->user() || !$university->belongsToCurrentUser()) {
             if (!$university->public)
                 return response()->json(['error' => 'Университет скрыт']);

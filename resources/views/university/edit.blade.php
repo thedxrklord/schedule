@@ -5,7 +5,7 @@
         <div class="row justify-content-center">
             <div class="col-md-8">
                 <div class="card">
-                    <div class="card-header">Create university</div>
+                    <div class="card-header">Edit university</div>
                     <div class="card-body">
                         <form method="post" enctype="multipart/form-data">
                             @csrf
@@ -15,7 +15,7 @@
                                 </label>
                                 <div class="col-md-6">
                                     <input id="short-name" type="text" class="form-control"
-                                           name="university_short_name" required>
+                                           name="university_short_name" required value="{{ $university->short_name }}">
                                 </div>
                             </div>
                             <div class="form-group row">
@@ -24,7 +24,7 @@
                                 </label>
                                 <div class="col-md-6">
                                     <input id="full-name" type="text" class="form-control"
-                                           name="university_full_name" required>
+                                           name="university_full_name" required value="{{ $university->full_name }}">
                                 </div>
                             </div>
                             <div class="form-group row">
@@ -33,21 +33,7 @@
                                 </label>
                                 <div class="col-md-6">
                                     <textarea id="description" class="form-control"
-                                              name="university_description"></textarea>
-                                </div>
-                            </div>
-                            <div class="form-group row">
-                                <label for="image" class="col-md-4 col-form-label text-md-right">
-                                    Image
-                                </label>
-                                <div class="col-md-6">
-                                    <div class="input-group">
-                                        <div class="custom-file">
-                                            <input type="file" class="custom-file-input" id="image"
-                                                   name="university_image" required accept="image/*">
-                                            <label class="custom-file-label" for="image">Choose file</label>
-                                        </div>
-                                    </div>
+                                              name="university_description">{{ $university->description }}</textarea>
                                 </div>
                             </div>
                             <div class="form-group row">
@@ -55,7 +41,7 @@
                                 <div class="col-md-6">
                                     <div class="custom-control custom-checkbox">
                                         <input type="checkbox" class="custom-control-input" id="public"
-                                               name="university_public" checked>
+                                               name="university_public" {{ $university->public === 1 ? 'checked' : '' }} >
                                         <label class="custom-control-label" for="public">
                                             Public ?
                                         </label>
@@ -65,7 +51,7 @@
                             <div class="form-group row mb-0">
                                 <div class="col-md-8 offset-md-4">
                                     <button type="submit" class="btn btn-primary">
-                                        Create
+                                        Edit
                                     </button>
                                 </div>
                             </div>

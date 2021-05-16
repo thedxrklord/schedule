@@ -3,7 +3,9 @@
 This project is a mini-implementation of university management system.
 <br>The goal of the project is to easily manage the university schedule.
 </p>
-<br><br>
+
+<h1 align="center"><a href="https://github.com/thedxrklord/schedule/wiki">WIKI</a></h1>
+<br>
 
 Server requirements:
 ````
@@ -21,11 +23,13 @@ copy .env.example .env
 php artisan key:generate
 
 Now, you need to replace db connection in .env file
+Also, replace ADMINISTRATOR_EMAIL in the same file. 
+It gives you some administrator functions
 After it is done run:
 php artisan migrate
 ````
 
-After installation you can register and create your university<br>
+After installation you can register and create your university.<br>
 App has featured like 'University Shared Access', when users can create and delete classtimes, but can't control your university structure.
 
 
